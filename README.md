@@ -1,6 +1,6 @@
 
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>ENTER YOUR NAME:BASKARAN V</H3>
+<H3>ENTER YOUR REGISTER NO:212222230020</H3>
 <H3>EX. NO.4</H3>
 <H3>DATE:</H3>
 <H1 ALIGN =CENTER>Implementation of MLP with Backpropagation for Multiclassification</H1>
@@ -116,11 +116,104 @@ Normalize our dataset.
 
 <H3>Program:</H3> 
 
-Insert your code here
+## Import Libraries
+```
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+```
+## Load and Inspect Data
+```
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+arr = ['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth', 'Species']
+df = pd.read_csv(url, names=arr)
+print(df.head())
+```
+```
+a = df.iloc[:, 0:4]
+b = df.iloc[:, 4:5]
+training_a, testing_a, training_b, testing_b = train_test_split(a, b, test_size=0.25)
+```
+## Data Preprossing
+```
+myscaler = StandardScaler()
+myscaler.fit(training_a)
+training_a = myscaler.transform(training_a)
+testing_a = myscaler.transform(testing_a)
+```
+## Define and Train Model
+```
+m1 = MLPClassifier(hidden_layer_sizes=(12, 13, 14), activation='relu', solver='adam', max_iter=2500)
+m1.fit(training_a, training_b.values.ravel())
+```
+## Make Predictions and Evaluate Model
+```
+predicted_values = m1.predict(testing_a)
+print(confusion_matrix(testing_b, predicted_values))
+print(classification_report(testing_b, predicted_values))
 
+```
+# Program:
+### Import Libraries
+```
+import pandas as pd
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+```
+## Load Data
+```
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'Class']
+irisdata = pd.read_csv(url, names=names)
+```
+## Data Exploration
+```
+X = irisdata.iloc[:, 0:4]
+y = irisdata.select_dtypes(include=[object])
+X.head()
+y.head()
+y.Class.unique()
+```
+## Data Preprocessing
+```
+le = preprocessing.LabelEncoder()
+y = y.apply(le.fit_transform)
+y.head()
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
+```
+## Model Training (MLP Classifier)
+```
+mlp = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=1000)
+mlp.fit(X_train, y_train.values.ravel())
+```
+## Make Predictions
+```
+predictions = mlp.predict(X_test)
+print(predictions)
+```
+## Model Evaluation
+```
+print(confusion_matrix(y_test, predictions))
+print(classification_report(y_test, predictions))
+```
+
+<br>
 <H3>Output:</H3>
 
-Show your results here
+![image](https://github.com/BaskaranV15/Ex-4-NN/assets/118703522/b9c5b173-a393-4843-8ac6-d777f94cee87)
+
+![image](https://github.com/BaskaranV15/Ex-4-NN/assets/118703522/78299f21-762d-4cf9-aaa9-2372627b3442)
 
 <H3>Result:</H3>
 Thus, MLP is implemented for multi-classification using python.
